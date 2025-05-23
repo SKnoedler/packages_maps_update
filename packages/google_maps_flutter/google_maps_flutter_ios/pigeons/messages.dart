@@ -759,6 +759,10 @@ abstract class MapsCallbackApi {
   @ObjCSelector('didTapGroundOverlayWithIdentifier:')
   void onGroundOverlayTap(String groundOverlayId);
 
+  /// Called when a point of interest is tapped.
+  @ObjCSelector('didTapPoiAtPosition:name:placeId:')
+  void onPoiClick(PlatformLatLng position, String name, String placeId);
+
   /// Called to get data for a map tile.
   @async
   @ObjCSelector('tileWithOverlayIdentifier:location:zoom:')

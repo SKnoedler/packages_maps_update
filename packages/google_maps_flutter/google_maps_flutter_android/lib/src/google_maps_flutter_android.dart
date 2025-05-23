@@ -1169,6 +1169,18 @@ class HostMapMessageHandler implements MapsCallbackApi {
     streamController
         .add(MapTapEvent(mapId, _latLngFromPlatformLatLng(position)));
   }
+
+  @override
+  void onPoiClick(PlatformLatLng position, String name, String placeId) {
+    streamController.add(MapPointOfInterestTapEvent(
+      mapId,
+      PointOfInterest(
+        _latLngFromPlatformLatLng(position),
+        name,
+        placeId,
+      ),
+    ));
+  }
 }
 
 LatLng _latLngFromPlatformLatLng(PlatformLatLng latLng) {

@@ -53,7 +53,9 @@ import io.flutter.plugins.googlemaps.Messages.MapsCallbackApi;
 import io.flutter.plugins.googlemaps.Messages.MapsInspectorApi;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -320,11 +322,11 @@ class GoogleMapController
   }
 
   public void onPoiClick(PointOfInterest poi) {
-    final Map<String, Object> arguments = new HashMap<>(2);
-    arguments.put("position", Convert.latLngToJson(poi.latLng));
-    arguments.put("name", poi.name);
-    arguments.put("placeId", poi.placeId);
-    methodChannel.invokeMethod("map#onPointOfInterestTap", arguments);
+    flutterApi.onPoiClick(
+        Convert.latLngToPigeon(poi.latLng),
+        poi.name,
+        poi.placeId,
+        new NoOpVoidResult());
   }
 
   @Override
