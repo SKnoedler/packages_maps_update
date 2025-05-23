@@ -116,8 +116,6 @@
 // creation time and there's no mechanism to return non-fatal error details during platform view
 // initialization.
 @property(nonatomic, copy) NSString *styleError;
-// Method channel for POI events (uses legacy channel approach like Android)
-@property(nonatomic, strong) FlutterMethodChannel *methodChannel;
 // The main Pigeon API implementation, separate to avoid lifetime extension.
 @property(nonatomic, strong) FGMMapCallHandler *callHandler;
 // The inspector API implementation, separate to avoid lifetime extension.
@@ -167,10 +165,6 @@
     _mapView.delegate = self;
     _mapView.paddingAdjustmentBehavior = kGMSMapViewPaddingAdjustmentBehaviorNever;
     _registrar = registrar;
-    // Initialize method channel for POI events (following the same pattern as Android)
-    NSString *channelName = [NSString stringWithFormat:@"plugins.flutter.io/google_maps_%lld", viewId];
-    _methodChannel = [FlutterMethodChannel methodChannelWithName:channelName
-                                                 binaryMessenger:registrar.messenger];
     _clusterManagersController =
         [[FGMClusterManagersController alloc] initWithMapView:_mapView
                                               callbackHandler:_dartCallbackHandler];
@@ -366,12 +360,11 @@
     didTapPOIWithPlaceID:(NSString *)placeID
                     name:(NSString *)name
                 location:(CLLocationCoordinate2D)location {
-  [self.methodChannel invokeMethod:@"map#onPointOfInterestTap"
-                         arguments:@{
-                           @"position" : @[@(location.latitude), @(location.longitude)],
-                           @"name" : name,
-                           @"placeId" : placeID,
-                         }];
+  [self.dartCallbackHandler didTapPoiAtPosition:FGMGetPigeonLatLngForCoordinate(location)
+                                           name:name
+                                        placeId:placeID
+                                     completion:^(FlutterError *_Nullable _){
+                                     }];
 }
 
 - (void)mapView:(GMSMapView *)mapView didChangeCameraPosition:(GMSCameraPosition *)position {
