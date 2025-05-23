@@ -163,6 +163,12 @@ class MethodChannelGoogleMapsFlutter extends GoogleMapsFlutterPlatform {
   }
 
   @override
+  Stream<MapPointOfInterestTapEvent> onPointOfInterestTap(
+      {required int mapId}) {
+    return _events(mapId).whereType<MapPointOfInterestTapEvent>();
+  }
+
+  @override
   Stream<MapLongPressEvent> onLongPress({required int mapId}) {
     return _events(mapId).whereType<MapLongPressEvent>();
   }
@@ -176,6 +182,16 @@ class MethodChannelGoogleMapsFlutter extends GoogleMapsFlutterPlatform {
     switch (call.method) {
       case 'camera#onMoveStarted':
         _mapEventStreamController.add(CameraMoveStartedEvent(mapId));
+      case 'map#onPointOfInterestTap':
+        final Map<String, Object?> arguments = _getArgumentDictionary(call);
+        _mapEventStreamController.add(MapPointOfInterestTapEvent(
+          mapId,
+          PointOfInterest(
+            LatLng.fromJson(arguments['position'])!,
+            arguments['name']! as String,
+            arguments['placeId']! as String,
+          ),
+        ));
       case 'camera#onMove':
         final Map<String, Object?> arguments = _getArgumentDictionary(call);
         _mapEventStreamController.add(CameraMoveEvent(

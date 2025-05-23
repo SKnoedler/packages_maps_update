@@ -356,6 +356,18 @@
   }];
 }
 
+- (void)mapView:(GMSMapView *)mapView
+    didTapPOIWithPlaceID:(NSString *)placeID
+                    name:(NSString *)name
+                location:(CLLocationCoordinate2D)location {
+  [self.channel invokeMethod:@"map#onPointOfInterestTap"
+                   arguments:@{
+                     @"position" : [FLTGoogleMapJSONConversions arrayFromLocation:location],
+                     @"name" : name,
+                     @"placeId" : placeID,
+                   }];
+}
+
 - (void)mapView:(GMSMapView *)mapView didChangeCameraPosition:(GMSCameraPosition *)position {
   if (self.trackCameraPosition) {
     [self.dartCallbackHandler

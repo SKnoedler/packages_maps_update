@@ -110,6 +110,10 @@ class GoogleMapController {
           .onCircleTap(mapId: mapId)
           .listen((CircleTapEvent e) => _googleMapState.onCircleTap(e.value)),
     );
+    GoogleMapsFlutterPlatform.instance
+        .onPointOfInterestTap(mapId: mapId)
+        .listen((MapPointOfInterestTapEvent e) =>
+            _googleMapState.onPointOfInterestTap(e.value));
     _streamSubscriptions.add(
       GoogleMapsFlutterPlatform.instance
           .onTap(mapId: mapId)

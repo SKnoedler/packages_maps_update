@@ -206,6 +206,12 @@ class GoogleMapsFlutterIOS extends GoogleMapsFlutterPlatform {
   }
 
   @override
+  Stream<MapPointOfInterestTapEvent> onPointOfInterestTap(
+      {required int mapId}) {
+    return _events(mapId).whereType<MapPointOfInterestTapEvent>();
+  }
+
+  @override
   Stream<ClusterTapEvent> onClusterTap({required int mapId}) {
     return _events(mapId).whereType<ClusterTapEvent>();
   }
