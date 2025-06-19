@@ -78,6 +78,8 @@
 @property(nonatomic, copy) NSObject<FlutterBinaryMessenger> *messenger;
 /// The suffix this instance was registered under with Pigeon.
 @property(nonatomic, copy) NSString *pigeonSuffix;
+/// The transaction wrapper to use for camera animations.
+@property(nonatomic, strong) id<FGMCATransactionProtocol> transactionWrapper;
 @end
 
 #pragma mark -
