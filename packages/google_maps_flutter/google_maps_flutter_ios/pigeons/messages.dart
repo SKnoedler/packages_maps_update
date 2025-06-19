@@ -187,7 +187,7 @@ class PlatformMarker {
     required this.position,
     this.rotation = 0.0,
     this.visible = true,
-    this.zIndex = 0.0,
+    this.zIndex = 0,
     this.clusterManagerId,
   });
 
@@ -202,7 +202,7 @@ class PlatformMarker {
   final PlatformLatLng position;
   final double rotation;
   final bool visible;
-  final double zIndex;
+  final int zIndex;
   final String markerId;
   final String? clusterManagerId;
 }
@@ -758,10 +758,6 @@ abstract class MapsCallbackApi {
   /// Called when a ground overlay is tapped.
   @ObjCSelector('didTapGroundOverlayWithIdentifier:')
   void onGroundOverlayTap(String groundOverlayId);
-
-  /// Called when a point of interest is tapped.
-  @ObjCSelector('didTapPoiAtPosition:name:placeId:')
-  void onPoiClick(PlatformLatLng position, String name, String placeId);
 
   /// Called to get data for a map tile.
   @async
