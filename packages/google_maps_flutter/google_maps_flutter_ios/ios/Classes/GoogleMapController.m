@@ -356,16 +356,6 @@
   }];
 }
 
-- (void)mapView:(GMSMapView *)mapView
-    didTapPOIWithPlaceID:(NSString *)placeID
-                    name:(NSString *)name
-                location:(CLLocationCoordinate2D)location {
-  [self.dartCallbackHandler didTapPoiAtPosition:FGMGetPigeonLatLngForCoordinate(location)
-                                           name:name
-                                        placeId:placeID
-                                     completion:^(FlutterError *_Nullable _){
-                                     }];
-}
 
 - (void)mapView:(GMSMapView *)mapView didChangeCameraPosition:(GMSCameraPosition *)position {
   if (self.trackCameraPosition) {
