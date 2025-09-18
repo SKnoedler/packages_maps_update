@@ -57,6 +57,7 @@ export 'package:google_maps_flutter_platform_interface/google_maps_flutter_platf
         TileOverlay,
         TileOverlayId,
         TileProvider,
+        WebCameraControlPosition,
         WebGestureHandling,
         WeightedLatLng;
 
